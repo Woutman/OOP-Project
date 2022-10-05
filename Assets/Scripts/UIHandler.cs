@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using TMPro;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class UIHandler : MonoBehaviour
 {
@@ -15,10 +18,16 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _policeCounter;
     [SerializeField] private TextMeshProUGUI _killerCounter;
 
+    [SerializeField] private TextMeshProUGUI _projectNameText;
+
     // Start is called before the first frame update
     void Start()
     {
-        Load();
+        LoadSettings();
+        if (MainManager.Instance != null)
+        {
+            _projectNameText.text = MainManager.Instance.ProjectName;
+        }        
     }
 
     // Update is called once per frame
@@ -37,7 +46,7 @@ public class UIHandler : MonoBehaviour
         public float KillersToSpawn;
     }
 
-    public void Save()
+    public void SaveSettings()
     {
         SaveData saveData = new SaveData();
         saveData.CiviliansToSpawn = _civilianSlider.value;
@@ -48,7 +57,7 @@ public class UIHandler : MonoBehaviour
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
     }
 
-    public void Load()
+    public void LoadSettings()
     {
         string path = Application.persistentDataPath + "/savefile.json";
         if (File.Exists(path))
@@ -60,5 +69,14 @@ public class UIHandler : MonoBehaviour
             _policeSlider.value = saveData.PoliceToSpawn;
             _killerSlider.value = saveData.KillersToSpawn;
         }      
+    }
+
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
     }
 }
