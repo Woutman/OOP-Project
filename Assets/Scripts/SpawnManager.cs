@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private float _civiliansToSpawn;
-    [SerializeField] private float _policeToSpawn;
-    [SerializeField] private float _killersToSpawn;
+    private float _civiliansToSpawn;
+    private float _policeToSpawn;
+    private float _killersToSpawn;
 
     [SerializeField] private GameObject _civilianPrefab;
     [SerializeField] private GameObject _policePrefab;
     [SerializeField] private GameObject _killerPrefab;
+
+    [SerializeField] private Slider _civilianSlider;
+    [SerializeField] private Slider _policeSlider;
+    [SerializeField] private Slider _killerSlider;
 
     private readonly float _boundary = 50;
 
@@ -44,6 +49,10 @@ public class SpawnManager : MonoBehaviour
 
     private void InstantiateAgents()
     {
+        _civiliansToSpawn = _civilianSlider.value;
+        _policeToSpawn = _policeSlider.value;
+        _killersToSpawn = _killerSlider.value;
+
         for (int i = 0; i < _civiliansToSpawn; i++)
         {
             GameObject unit = Instantiate(_civilianPrefab, GetRandomLocation(), _civilianPrefab.transform.rotation);
