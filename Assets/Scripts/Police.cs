@@ -40,7 +40,7 @@ public class Police : Unit
         {
             if (killer == null)
             {
-                break;
+                continue;
             }
 
             if (Vector3.Distance(transform.position, killer.transform.position) < DetectionRadius)

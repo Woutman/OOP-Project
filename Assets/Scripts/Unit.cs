@@ -80,13 +80,20 @@ public abstract class Unit : MonoBehaviour
         foreach (GameObject agent in agents)
         {
             var distance = Vector3.Distance(transform.position, agent.transform.position);
-            centerPos += (agent.transform.position - transform.position) / distance;
+            centerPos += (agent.transform.position - transform.position) * distance;
             sumWeights += distance;
         }
         centerPos /= agents.Count;
 
         var targetPos = transform.position - centerPos;
 
+        Agent.SetDestination(targetPos);
+    }
+
+    // Move away from specified game object.
+    protected void MoveFrom(GameObject agent)
+    {
+        var targetPos = transform.position - (agent.transform.position - transform.position);
         Agent.SetDestination(targetPos);
     }
 

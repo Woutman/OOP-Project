@@ -8,11 +8,13 @@ public class Killer : Unit
     protected override void Update()
     {
         CheckSurroundings();
+        // Reset behavior if no targets or threats are nearby.
         if (threats.Count == 0 && targets.Count == 0 && HasTarget)
         {
             HasTarget = false;
             Agent.ResetPath();
         }
+        // Prioritize running from threats over chasing targets.
         else if (threats.Count > 0)
         {
             HasTarget = true;
@@ -25,13 +27,14 @@ public class Killer : Unit
             MoveTo(target);
         }
 
+        // Wander randomly as default behavior.
         if (!HasTarget && !Agent.hasPath)
         {
             MoveRandomly();
         }
     }
 
-    // 
+    // Check for threats (police) and targets (civilians) nearby.
     protected override void CheckSurroundings()
     {
         targets.Clear();
@@ -40,7 +43,7 @@ public class Killer : Unit
         {
             if (police == null)
             {
-                break;
+                continue;
             }
 
             if (Vector3.Distance(transform.position, police.transform.position) < DetectionRadius)
@@ -53,7 +56,7 @@ public class Killer : Unit
         {
             if (civilian == null)
             {
-                break;
+                continue;
             }
 
             if (Vector3.Distance(transform.position, civilian.transform.position) < DetectionRadius)
@@ -63,6 +66,7 @@ public class Killer : Unit
         }
     }
 
+    // Killers kill civilians.
     protected override void ResolveConflict(Collision collision)
     {
         if (collision.gameObject.CompareTag("Civilian"))

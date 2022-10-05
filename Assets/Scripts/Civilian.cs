@@ -8,11 +8,13 @@ public class Civilian : Unit
     protected override void Update()
     {
         CheckSurroundings();
-        if (threats.Count == 0 && targets.Count == 0 && HasTarget)
+        // Reset behavior if no threats are nearby.
+        if (threats.Count == 0 && HasTarget)
         {
             HasTarget = false;
             Agent.ResetPath();
         }
+        // Run towards police if chased and police are nearby.
         else if (targets.Count > 0 && threats.Count > 0)
         {
             HasTarget = true;
@@ -25,12 +27,14 @@ public class Civilian : Unit
             MoveFrom(threats);
         }
 
+        // Wander randomly as default behavior.
         if (!HasTarget && !Agent.hasPath)
         {
             MoveRandomly();
         }
     }
 
+   // Check for threats (killers) and targets (police) nearby.
     protected override void CheckSurroundings()
     {
         targets.Clear();
@@ -39,7 +43,7 @@ public class Civilian : Unit
         {
             if (killer == null)
             {
-                break;
+                continue;
             }
 
             if (Vector3.Distance(transform.position, killer.transform.position) < DetectionRadius)
@@ -52,7 +56,7 @@ public class Civilian : Unit
         {
             if (police == null)
             {
-                break;
+                continue;
             }
 
             if (Vector3.Distance(transform.position, police.transform.position) < DetectionRadius)
@@ -62,6 +66,7 @@ public class Civilian : Unit
         }
     }
 
+    // Civilians activate police.
     protected override void ResolveConflict(Collision collision)
     {
         if (collision.gameObject.CompareTag("Police") && threats.Count > 0)
