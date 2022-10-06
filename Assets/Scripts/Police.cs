@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// INHERITANCE
 public class Police : Unit
 {
     public bool IsActive = false;
 
-    // Update is called once per frame
+    // POLYMORPHISM
     protected override void Update()
     {
+        // ABSTRACTION
         CheckSurroundings();
         // Reset if no targers are nearby.
         if (targets.Count == 0 && HasTarget)
@@ -32,6 +34,7 @@ public class Police : Unit
         }
     }
 
+    // POLYMORPHISM
     // Check for killers and add them to list of targets.
     protected override void CheckSurroundings()
     {
@@ -50,6 +53,7 @@ public class Police : Unit
         }
     }
 
+    // POLYMORPHISM
     // Police kill killers.
     protected override void ResolveConflict(Collision collision)
     {

@@ -780,8 +780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c85d9fece98348540806ff3b38d7a134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputField: {fileID: 1802156647}
-  ProjectName: 
+  _inputField: {fileID: 1802156647}
 --- !u!4 &1136106701
 Transform:
   m_ObjectHideFlags: 0

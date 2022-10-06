@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// INHERITANCE
 public class Civilian : Unit
 {
-    // Update is called once per frame
+    // POLYMORPHISM
     protected override void Update()
     {
+        // ABSTRACTION
         CheckSurroundings();
         // Reset behavior if no threats are nearby.
         if (threats.Count == 0 && HasTarget)
@@ -34,7 +36,8 @@ public class Civilian : Unit
         }
     }
 
-   // Check for threats (killers) and targets (police) nearby.
+    // POLYMORPHISM
+    // Check for threats (killers) and targets (police) nearby.
     protected override void CheckSurroundings()
     {
         targets.Clear();
@@ -66,6 +69,7 @@ public class Civilian : Unit
         }
     }
 
+    // POLYMORPHISM
     // Civilians activate police.
     protected override void ResolveConflict(Collision collision)
     {

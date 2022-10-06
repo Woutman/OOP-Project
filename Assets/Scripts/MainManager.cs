@@ -6,10 +6,12 @@ using TMPro;
 
 public class MainManager : MonoBehaviour
 {
-    public GameObject InputField;
+    [SerializeField] private GameObject _inputField;
 
-    public static MainManager Instance;
-    public string ProjectName;
+    // ENCAPSULATION
+    public static MainManager Instance { get; private set; }
+    // ENCAPSULATION
+    public string ProjectName { get; private set; }
 
     // Start is called before the first frame update
     void Awake()
@@ -27,7 +29,7 @@ public class MainManager : MonoBehaviour
     // Load main scene.
     public void LoadMain()
     {
-        ProjectName = InputField.GetComponent<TMP_InputField>().text;
+        ProjectName = _inputField.GetComponent<TMP_InputField>().text;
         SceneManager.LoadScene(1);
     }
 }

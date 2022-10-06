@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// INHERITANCE
 public class Killer : Unit
 {
-    // Update is called once per frame
+    // POLYMORPHISM
     protected override void Update()
     {
+        // ABSTRACTION
         CheckSurroundings();
         // Reset behavior if no targets or threats are nearby.
         if (threats.Count == 0 && targets.Count == 0 && HasTarget)
@@ -34,6 +37,7 @@ public class Killer : Unit
         }
     }
 
+    // POLYMORPHISM
     // Check for threats (police) and targets (civilians) nearby.
     protected override void CheckSurroundings()
     {
@@ -66,6 +70,7 @@ public class Killer : Unit
         }
     }
 
+    // POLYMORPHISM
     // Killers kill civilians.
     protected override void ResolveConflict(Collision collision)
     {

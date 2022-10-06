@@ -8,9 +8,39 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class Unit : MonoBehaviour
 {
+    // ENCAPSULATION
     private float _moveRadius = 25.0f;
+    public float MoveRadius 
+    {   get { return _moveRadius; }
+        set 
+        { 
+            if (value > 0) { _moveRadius = value; }
+            else { Debug.LogError("Value can't be negative."); } 
+        }
+    }
+    // ENCAPSULATION
     private float _speed = 5.0f;
-    protected float DetectionRadius = 10.0f;
+    public float Speed
+    {
+        get { return _speed;  }
+        set
+        {
+            if (value > 0) { _speed = value; }
+            else { Debug.LogError("Value can't be negative."); }
+        }
+    }
+    // ENCAPSULATION
+    private float _detectionRadius = 10.0f;
+    protected float DetectionRadius 
+    { 
+        get { return _detectionRadius; }
+        set 
+        { 
+            if (value > 0) { _detectionRadius = value; }
+            else { Debug.LogError("Value can't be negative."); } 
+        }
+    }
+
     protected bool HasTarget = false;
 
     protected NavMeshAgent Agent;
@@ -72,6 +102,7 @@ public abstract class Unit : MonoBehaviour
         return closestAgent;
     }
 
+    // POLYMORPHISM
     // Find weighted center of agents in list and move away from that point.
     protected void MoveFrom(List<GameObject> agents)
     {
@@ -90,6 +121,7 @@ public abstract class Unit : MonoBehaviour
         Agent.SetDestination(targetPos);
     }
 
+    // POLYMORPHISM
     // Move away from specified game object.
     protected void MoveFrom(GameObject agent)
     {
@@ -105,6 +137,7 @@ public abstract class Unit : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // ABSTRACTION
         ResolveConflict(collision);
     }
 
